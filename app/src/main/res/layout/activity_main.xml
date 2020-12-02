@@ -8,7 +8,7 @@
 
     <com.yy.scaledemo.ScaleImageView
         android:id="@+id/touch_view"
-        android:src="@drawable/ic_launcher_background"
+        android:src="@mipmap/abc"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"

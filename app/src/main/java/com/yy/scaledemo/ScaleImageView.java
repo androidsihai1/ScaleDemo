@@ -41,8 +41,6 @@ public class ScaleImageView extends AppCompatImageView implements View.OnTouchLi
         Log.d(TAG, "onTouch isCanTouch= " + isCanTouch);
         int pointerCount = event.getPointerCount();
         switch (event.getAction() & MotionEvent.ACTION_MASK) {
-            case MotionEvent.ACTION_DOWN:
-                break;
             case MotionEvent.ACTION_UP:
                 if (pointerCount == 2) {
                     downX1 = 0;
@@ -69,6 +67,7 @@ public class ScaleImageView extends AppCompatImageView implements View.OnTouchLi
                         setSelfPivot(-lessX, -lessY);
                         Log.d(TAG, "此时为滑动");
                     }
+                    //缩放处理
                     moveDist = spacing(event);
                     double space = moveDist - oldDist;
                     float scale = (float) (getScaleX() + space / v.getWidth());
