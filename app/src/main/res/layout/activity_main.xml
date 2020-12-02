@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <com.yy.scaledemo.ScaleX5Webview
+    <com.yy.scaledemo.ScaleImageView
         android:id="@+id/touch_view"
         android:src="@drawable/ic_launcher_background"
         android:layout_width="match_parent"
@@ -17,6 +17,6 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:orientation="vertical" >
-    </com.yy.scaledemo.ScaleX5Webview>
+    </com.yy.scaledemo.ScaleImageView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 
 
-public class ScaleX5Webview extends AppCompatImageView implements View.OnTouchListener {
+public class ScaleImageView extends AppCompatImageView implements View.OnTouchListener {
     public static final String TAG = "ScaleX5Webview";
     private boolean isCanTouch = false;
     public static final float SCALE_MAX = 5.0f; //最大的缩放比例
@@ -27,11 +27,11 @@ public class ScaleX5Webview extends AppCompatImageView implements View.OnTouchLi
     private float centerX = 0;
     private float centerY = 0;
 
-    public ScaleX5Webview(Context context) {
+    public ScaleImageView(Context context) {
         this(context, null);
     }
 
-    public ScaleX5Webview(Context context, @Nullable AttributeSet attrs) {
+    public ScaleImageView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         setOnTouchListener(this);
     }
@@ -40,7 +40,6 @@ public class ScaleX5Webview extends AppCompatImageView implements View.OnTouchLi
         isCanTouch = canTouch;
     }
 
-    boolean isSliding = true;
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
@@ -77,33 +76,20 @@ public class ScaleX5Webview extends AppCompatImageView implements View.OnTouchLi
 
                     moveDist = spacing(event);
 
-                    boolean changeMoveDist = Math.abs(moveDist - oldDist) > 15;
-
-
-//                    Log.d(TAG, " x1=" + x1 + " x2=" + x2 + "  y1=" + y1 + " y2=" + y2 +
-//                            " changeX1=" + changeX1 + " changeX2=" + changeX2
-//                            + "  changeY1=" + changeY1 + "  changeY2=" + changeY2 + " moveDist="
-//                            + moveDist + "  oldDist=" + oldDist + " changeDist=" + (moveDist - oldDist));
-
-                    boolean isSameDirectionX = (changeX1 >= 0 && changeX2 >= 0) || (changeX1 <= 0 && changeX2 <= 0);
-                    boolean isSameDirectionY = (changeY1 >= 0 && changeY2 >= 0) || (changeY1 <= 0 && changeY2 <= 0);
+//                    boolean changeMoveDist = Math.abs(moveDist - oldDist) > 15;
+//                    boolean isSameDirectionX = (changeX1 >= 0 && changeX2 >= 0) || (changeX1 <= 0 && changeX2 <= 0);
+//                    boolean isSameDirectionY = (changeY1 >= 0 && changeY2 >= 0) || (changeY1 <= 0 && changeY2 <= 0);
                     //if (getScaleX() > 1 && (isSameDirectionX && isSameDirectionY) && !changeMoveDist) { //滑动
                     if (getScaleX() > 1) { //滑动
                         float lessX = (float) ((changeX1) / 2 + (changeX2) / 2);
                         float lessY = (float) ((changeY1) / 2 + (changeY2) / 2);
-                        //setSelfPivot(lessX, lessY);
-                        setTran(lessX, lessY);
+                        setSelfPivot(lessX, lessY);
                         Log.d(TAG, "此时为滑动");
-                        isSliding = true;
                     }
                     //if (changeMoveDist) { //缩放
                     moveDist = spacing(event);
                     double space = moveDist - oldDist;
                     float scale = (float) (getScaleX() + space / v.getWidth());
-                    float pivotX = getPivotX();
-                    float pivotY = getPivotY();
-                    //setSelfPivot(centerX, centerY);
-                    //setPivot(centerX, centerY);
                     if (scale < SCALE_MIN) {
                         setScale(SCALE_MIN);
                     } else if (scale > SCALE_MAX) {
@@ -111,10 +97,6 @@ public class ScaleX5Webview extends AppCompatImageView implements View.OnTouchLi
                     } else {
                         setScale(scale);
                     }
-                    Log.d(TAG, "此时为缩放 scale=" + scale * 10000 / 100 + "%" + "  " +
-                            "pivotX=" + pivotX + " pivotY=" + pivotY + " centerx=" +
-                            centerX + " centery=" + centerY);
-                    isSliding = false;
                     //}
 
 
@@ -235,11 +217,6 @@ public class ScaleX5Webview extends AppCompatImageView implements View.OnTouchLi
         setPivotY(y);
     }
 
-
-    public void setTran(float x, float y) {
-        setTranslationX(x + getTranslationX());
-        setTranslationY(y + getTranslationY());
-    }
 
     /**
      * 设置放大缩小
